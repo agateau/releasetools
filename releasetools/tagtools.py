@@ -23,5 +23,5 @@ def get_released_version(app):
 
 def create_tag(app, version):
     tag = apply_prefix(app, version)
-    project = app.project_name
-    run(["git", "tag", "--annotate", tag, "--message", f"{project} {version}"])
+    run(["git", "tag", "--annotate", tag, "--message",
+         f"{app.project_name} {version}"])

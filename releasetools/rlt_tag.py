@@ -5,8 +5,6 @@ Manipulate the project released and next versions
 import argparse
 import sys
 
-from subprocess import run
-
 from releasetools.app import App
 from releasetools import tagtools, versiontools
 

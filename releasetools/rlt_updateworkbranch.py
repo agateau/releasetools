@@ -8,7 +8,6 @@ import sys
 from subprocess import run
 
 from releasetools.app import App
-from releasetools import tagtools
 
 
 def print_changelog(tag, options):
