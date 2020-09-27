@@ -11,21 +11,20 @@ from releasetools.app import App
 from releasetools import tagtools
 
 
-def print_changelog(tag, options):
-    run(["git", "log", options, f"{tag}..HEAD"])
+def app_main(app, args):
+    tag = tagtools.get_release_tag()
+    git_log_options = app.config["changelog"]["git_log_options"]
+    run(["git", "log", git_log_options, f"{tag}..HEAD"])
+
+    return 0
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.description = __doc__
-    parser.parse_args()
 
-    app = App()
-    tag = tagtools.get_release_tag()
-
-    print_changelog(tag, app.config["changelog"]["git_log_options"])
-
-    return 0
+    app = App(parser)
+    return app.run(app_main)
 
 
 if __name__ == "__main__":

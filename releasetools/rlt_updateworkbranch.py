@@ -15,12 +15,7 @@ def print_changelog(tag, options):
     run(["git", "log", options, f"{tag}..HEAD"])
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.description = __doc__
-    parser.parse_args()
-
-    app = App()
+def app_main(app, args):
     git_cfg = app.config["git"]
 
     run(["git", "checkout", git_cfg["work_branch"]])
@@ -28,8 +23,15 @@ def main():
     work_branch = git_cfg["work_branch"]
     run(["git", "merge", f"origin/{work_branch}"])
     run(["git", "status"])
-
     return 0
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.description = __doc__
+
+    app = App(parser)
+    return app.run(app_main)
 
 
 if __name__ == "__main__":

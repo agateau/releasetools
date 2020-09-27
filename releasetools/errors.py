@@ -1,0 +1,2 @@
+class ReleaseToolsError(Exception):
+    pass

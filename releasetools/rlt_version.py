@@ -9,6 +9,17 @@ from releasetools.app import App
 from releasetools import tagtools, versiontools
 
 
+def app_main(app, args):
+    if args.set_next:
+        versiontools.write(app, args.set_next, dry_run=args.dry_run)
+    elif args.next:
+        print(versiontools.read(app))
+    elif args.released:
+        print(tagtools.get_released_version(app))
+
+    return 0
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.description = __doc__
@@ -22,17 +33,8 @@ def main():
     parser.add_argument("-s", "--set-next", help="Set version to VERSION",
                         metavar="VERSION")
 
-    args = parser.parse_args()
-
-    app = App()
-    if args.set_next:
-        versiontools.write(app, args.set_next, dry_run=args.dry_run)
-    elif args.next:
-        print(versiontools.read(app))
-    elif args.released:
-        print(tagtools.get_released_version(app))
-
-    return 0
+    app = App(parser)
+    return app.run(app_main)
 
 
 if __name__ == "__main__":

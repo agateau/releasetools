@@ -1,5 +1,7 @@
 import re
 
+from releasetools.errors import ReleaseToolsError
+
 
 class VersionUpdater:
     def __init__(self, config):
@@ -17,7 +19,7 @@ def read(app):
         if match:
             return match.group(1)
     else:
-        raise Exception("Version line not found")
+        raise ReleaseToolsError("Version line not found")
 
 
 def write(app, version, dry_run=False):
@@ -29,7 +31,7 @@ def write(app, version, dry_run=False):
             updater.lines[idx] = line[:start] + version + line[end:]
             break
     else:
-        raise Exception("Version line not found")
+        raise ReleaseToolsError("Version line not found")
 
     text = "".join(updater.lines)
     if dry_run:
