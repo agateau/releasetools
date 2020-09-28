@@ -10,10 +10,6 @@ from subprocess import run
 from releasetools.app import App
 
 
-def print_changelog(tag, options):
-    run(["git", "log", options, f"{tag}..HEAD"])
-
-
 def app_main(app, args):
     git_cfg = app.config["git"]
 
