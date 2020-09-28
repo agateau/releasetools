@@ -29,6 +29,8 @@ Creates tag for the next version.
 
 ## releasetools.conf
 
+Not implemented yet.
+
 ```
 [git]
 main_branch=master
