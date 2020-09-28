@@ -12,11 +12,12 @@ from releasetools.app import App
 
 def app_main(app, args):
     git_cfg = app.config["git"]
-
-    run(["git", "checkout", git_cfg["work_branch"]])
-    run(["git", "pull"])
     work_branch = git_cfg["work_branch"]
-    run(["git", "merge", f"origin/{work_branch}"])
+    tag_branch = git_cfg["tag_branch"]
+
+    run(["git", "checkout", work_branch])
+    run(["git", "pull"])
+    run(["git", "merge", f"origin/{tag_branch}"])
     run(["git", "status"])
     return 0
 
