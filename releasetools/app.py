@@ -3,6 +3,8 @@ import sys
 
 from pathlib import Path
 
+from git import Repo
+
 from releasetools.errors import ReleaseToolsError
 
 
@@ -43,6 +45,7 @@ class App:
         args = self._parser.parse_args()
         try:
             _cd_project_root()
+            self.repo = Repo(".")
             self.project_name = Path.cwd().name
             self.config = _load_config()
 

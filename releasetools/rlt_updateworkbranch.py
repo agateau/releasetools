@@ -5,9 +5,8 @@ Update the work branch
 import argparse
 import sys
 
-from subprocess import run
-
 from releasetools.app import App
+from releasetools.errors import ReleaseToolsError
 
 
 def app_main(app, args):
@@ -15,10 +14,20 @@ def app_main(app, args):
     work_branch = git_cfg["work_branch"]
     main_branch = git_cfg["main_branch"]
 
-    run(["git", "checkout", work_branch])
-    run(["git", "pull"])
-    run(["git", "merge", f"origin/{main_branch}"])
-    run(["git", "status"])
+    if app.repo.is_dirty():
+        raise ReleaseToolsError("Working tree contains changes")
+
+    if app.repo.untracked_files:
+        files = ", ".join(app.repo.untracked_files)
+        raise ReleaseToolsError(f"Working tree contains untracked files ({files})")
+
+    print(f"Switching to {work_branch} and updating it...")
+    app.repo.heads[work_branch].checkout()
+    app.repo.git.pull()
+
+    print(f"\nMerging {main_branch} in...")
+    app.repo.git.merge(f"origin/{main_branch}")
+
     return 0
 
 
