@@ -5,12 +5,16 @@ Manipulate the project released and next versions
 import argparse
 import sys
 
-from releasetools.app import App
 from releasetools import tagtools, versiontools
+from releasetools.app import App
+from releasetools.errors import ReleaseToolsError
 
 
 def app_main(app, args):
     next_version = versiontools.read(app)
+    main_branch = app.config["git"]["main_branch"]
+    if app.repo.active_branch.name != main_branch:
+        raise ReleaseToolsError(f"Tag must be created on the '{main_branch}' branch")
     tagtools.create_tag(app, next_version)
     return 0
 
