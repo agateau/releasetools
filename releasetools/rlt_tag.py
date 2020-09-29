@@ -19,11 +19,11 @@ def app_main(app, args):
     return 0
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.description = __doc__
 
-    app = App(parser)
+    app = App(parser, argv)
     return app.run(app_main)
 
 

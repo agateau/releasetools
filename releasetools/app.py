@@ -38,11 +38,15 @@ def _cd_project_root():
 
 
 class App:
-    def __init__(self, parser):
+    def __init__(self, parser, argv=None):
         self._parser = parser
+        if argv is None:
+            self._argv = sys.argv[1:]
+        else:
+            self._argv = argv
 
     def run(self, app_main):
-        args = self._parser.parse_args()
+        args = self._parser.parse_args(self._argv)
         try:
             _cd_project_root()
             self.repo = Repo(".")
