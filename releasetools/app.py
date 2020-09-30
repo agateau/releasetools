@@ -3,6 +3,9 @@ import sys
 
 from pathlib import Path
 
+import mergedeep
+import toml
+
 from git import Repo
 
 from releasetools.errors import ReleaseToolsError
@@ -22,10 +25,24 @@ DEFAULT_CONFIG = {
     }
 }
 
+CONFIG_FILE_NAME = "releasetools.toml"
 
-def _load_config():
-    # TODO parse releasetools.conf
-    return DEFAULT_CONFIG
+
+def _load_config(project_path):
+    config_path = project_path / CONFIG_FILE_NAME
+    if not config_path.exists():
+        return DEFAULT_CONFIG
+
+    try:
+        toml_config = toml.load(config_path)
+    except toml.TomlDecodeError as e:
+        raise ReleaseToolsError(f"Invalid configuration file: {e}")
+
+    try:
+        return mergedeep.merge({}, DEFAULT_CONFIG, toml_config,
+                               strategy=mergedeep.Strategy.TYPESAFE_REPLACE)
+    except TypeError as e:
+        raise ReleaseToolsError(f"Invalid value in configuration file: {e}")
 
 
 def _cd_project_root():
@@ -47,9 +64,10 @@ class App:
         args = self._parser.parse_args(argv)
         try:
             _cd_project_root()
+            project_path = Path.cwd()
             self.repo = Repo(".")
-            self.project_name = Path.cwd().name
-            self.config = _load_config()
+            self.project_name = project_path.name
+            self.config = _load_config(project_path)
 
             return app_main(self, args)
         except ReleaseToolsError as e:

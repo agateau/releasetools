@@ -1,4 +1,4 @@
-# Release-tools
+# Releasetools
 
 ## Assumptions
 
@@ -27,20 +27,20 @@ Makes sure work branch is up to date.
 
 Creates tag for the next version.
 
-## releasetools.conf
+## releasetools.toml
 
-Not implemented yet.
+Create this file in the root directory of your project to customize Releasetools behavior.
 
 ```
 [git]
-main_branch=master
-tag_prefix=
-work_branch=dev
+main_branch="master"
+tag_prefix=""
+work_branch="dev"
 
 [version]
-file=CMakeLists.txt
-pattern="^    VERSION (.*)$")
+file="CMakeLists.txt"
+pattern="^    VERSION (.*)$"
 
 [changelog]
-git_log_options=--pretty=format:'- \%s (\%an)'
+git_log_options="--pretty=format:- \%s (\%an)"
 ```
