@@ -11,7 +11,7 @@ from releasetools.errors import ReleaseToolsError
 DEFAULT_CONFIG = {
     "version": {
         "file": "CMakeLists.txt",
-        "pattern": "^\s*VERSION (.*)$",
+        "pattern": r"^\s*VERSION (.*)$",
     },
     "changelog": {
         "git_log_options": "--pretty=format:- %s (%an)"
