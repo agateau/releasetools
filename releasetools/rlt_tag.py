@@ -23,8 +23,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.description = __doc__
 
-    app = App(parser, argv)
-    return app.run(app_main)
+    app = App(parser)
+    return app.run(app_main, argv)
 
 
 if __name__ == "__main__":
