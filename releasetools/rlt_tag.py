@@ -15,7 +15,8 @@ def app_main(app, args):
     main_branch = app.config["git"]["main_branch"]
     if app.repo.active_branch.name != main_branch:
         raise ReleaseToolsError(f"Tag must be created on the '{main_branch}' branch")
-    tagtools.create_tag(app, next_version)
+    tag = tagtools.create_tag(app, next_version)
+    print(f"Created tag {tag}")
     return 0
 
 

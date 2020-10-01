@@ -25,3 +25,4 @@ def create_tag(app, version):
     tag = apply_prefix(app, version)
     run(["git", "tag", "--annotate", tag, "--message",
          f"{app.project_name} {version}"])
+    return tag
