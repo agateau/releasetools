@@ -55,7 +55,7 @@ def _cd_project_root():
 
 
 class App:
-    def __init__(self, parser, argv=None):
+    def __init__(self, parser):
         self._parser = parser
 
     def run(self, app_main, argv=None):

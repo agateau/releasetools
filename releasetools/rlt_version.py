@@ -20,7 +20,7 @@ def app_main(app, args):
     return 0
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.description = __doc__
 
@@ -34,7 +34,7 @@ def main():
                         metavar="VERSION")
 
     app = App(parser)
-    return app.run(app_main)
+    return app.run(app_main, argv)
 
 
 if __name__ == "__main__":

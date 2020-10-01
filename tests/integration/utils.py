@@ -14,3 +14,13 @@ def create_repo(tmp_path, name="repo", branches=["dev"]):
     for branch in branches:
         repo.create_head(branch)
     return repo
+
+
+def create_file(path, content=""):
+    with open(path, "w") as f:
+        f.write(content)
+
+
+def commit_file(repo, path):
+    repo.index.add([str(path)])
+    repo.index.commit(f"File {path}")
