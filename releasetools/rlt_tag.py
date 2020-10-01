@@ -17,12 +17,16 @@ def app_main(app, args):
         raise ReleaseToolsError(f"Tag must be created on the '{main_branch}' branch")
     tag = tagtools.create_tag(app, next_version)
     print(f"Created tag {tag}")
+    if args.push:
+        app.repo.git.push(["origin", tag])
     return 0
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.description = __doc__
+    parser.add_argument("-p", "--push", action="store_true",
+                        help="Push created tag")
 
     app = App(parser)
     return app.run(app_main, argv)
