@@ -14,5 +14,3 @@ def create_repo(tmp_path, name="repo", branches=["dev"]):
     for branch in branches:
         repo.create_head(branch)
     return repo
-
-
