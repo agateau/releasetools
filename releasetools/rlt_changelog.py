@@ -28,7 +28,7 @@ def print_changelog(tag, git_log_options):
 
 
 def app_main(app, args):
-    tag = tagtools.get_release_tag()
+    tag = tagtools.get_release_tag(app)
     git_log_options = app.config["changelog"]["git_log_options"]
 
     print_header(app)

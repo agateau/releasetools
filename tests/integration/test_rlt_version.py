@@ -16,6 +16,11 @@ def test_released(tmp_path, capsys):
         commit_file(repo, path)
         repo.create_tag(tag, message=f"Release {tag}")
 
+    # AND a commit after the tag
+    path = Path(repo.working_tree_dir) / "new"
+    create_file(path)
+    commit_file(repo, path)
+
     # WHEN I call rlt-version --released
     assert rlt_version.main(["--released"]) == 0
 
