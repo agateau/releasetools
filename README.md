@@ -42,5 +42,5 @@ file="CMakeLists.txt"
 pattern="^    VERSION (.*)$"
 
 [changelog]
-git_log_options="--pretty=format:- \%s (\%an)"
+git_log_options="--pretty=format:- \\%s (\\%an)"
 ```
